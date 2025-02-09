@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">DRF Reminder</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/homeauthed/{{ token }}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Личный кабинет</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/{{ token }}">Дашборд</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block header %}{{ header }}{% endblock %}
+
+{% block content %}
+<p>
+    До истечения срока действия вашего токена авторизации: {{ token_expiration }} сек.<br>
+    (после чего текущая сессия будет завершена)
+</p>
+<form method="POST">
+    {% csrf_token %}
+    {{ token_expiration_form }}
+    <br>
+    <button type="submit">Подтвердить</button>
+</form>
+<br>
+<p>Имя: <a href="/changeaccountdata/name/{{ token }}">{{ user.name }}</a></p>
+<p>Email: <a href="/changeaccountdata/email/{{ token }}">{{ user.email }}</a></p>
+<p>Пароль: <a href="/changeaccountdata/password/{{ token }}">{{ user.password }}</a></p>
+<p>Дата рождения: <a href="/changeaccountdata/birthdate/{{ token }}">{{ user.birthdate }}</a></p>
+<p><a href="/changeaccountdata/avatar/{{ token }}"><img src="/{{ user.avatar }}"></a></p>
+<form method="POST">
+    {% csrf_token %}
+    {{ logout_form }}
+    <button type="submit">Выйти из аккаунта</button>
+</form>
+<br>
+<br>
+<br>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">DRF Reminder</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/account/{{ token }}">Личный кабинет</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/{{ token }}">Дашборд</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block header %}{{ header }}{% endblock %}
+
+{% block content %}
+
+{% for note in page_obj %}
+<div style="border: 3px solid black; margin: 3px;">
+    <strong>{{ note.title }}</strong><br>
+    {% if note.content %}
+    {{ note.content }}<br>
+    {% endif %}
+    Выполнить до: {{ note.remind_date }}<br>
+</div>
+{% endfor %}
+
+{% if notes_len > 5 %}
+<nav>
+    <span>Постраничная навигация:</span>
+    <ul>
+        {% for p in page_obj.paginator.page_range %}
+        <li>
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% elif notes_len == 0 %}
+<p>У вас пока нет активных напоминаний, но если появятся — напомним 😉 </p>
+{% endif %}
+
+{% endblock %}

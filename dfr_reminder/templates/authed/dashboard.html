@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">DRF Reminder</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/homeauthed/{{ token }}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/account/{{ token }}">Личный кабинет</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Дашборд</a>
+                </li>
+                {% if completed_notes %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/completedtasks/{{ token }}">Завершённые</a>
+                </li>
+                {% endif %}
+                {% if uncompleted_notes %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/uncompletedtasks/{{ token }}">Незавершённые</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block header %}{{ header }}{% endblock %}
+
+{% block content %}
+
+{% for note in page_obj %}
+<div style="border: 3px solid black; margin: 3px;">
+    <strong>{{ note.title }}</strong><br>
+    {% if note.content %}
+    {{ note.content }}<br>
+    {% endif %}
+    {% if note.remind_date %}
+    Выполнить до: {{ note.remind_date }}<br>
+    {% endif %}
+    {% if note.is_completed %}
+    Выполнено<br>
+    {% else %}
+    Не выполнено<br>
+    {% endif %}
+    {% if note.image %}
+    <img src="/{{ note.image }}" alt="note_image" style="margin: 3px;"><br>
+    {% endif %}
+    Дата создания: {{ note.created_at }}<br>
+    Дата обновления: {{ note.updated_at }}<br>
+    <form method="POST">
+        {% csrf_token %}
+        {{ change_note_status_form }}
+        <input id="note_id" name="note_id" type="number" value="{{ note.id }}" hidden="hidden">
+        <button type="submit" name="status_update">Обновить статус</button>
+        <button type="submit" name="delete_note">Удалить заметку</button>
+    </form>
+</div>
+{% endfor %}
+
+{% if notes_len > 5 %}
+<nav>
+    <span>Постраничная навигация:</span>
+    <ul>
+        {% for p in page_obj.paginator.page_range %}
+        <li>
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% elif notes_len == 0 %}
+<p>У вас пока нет активных или завершённых напоминаний</p>
+{% endif %}
+
+<form style="border: 3px solid black; margin: 3px; padding: 3px;" method="POST" enctype="multipart/form-data">
+    <p>Добавить новую заметку:</p>
+    {% csrf_token %}
+    {{ add_note_form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+<br>
+<br>
+<br>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">DRF Reminder</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/homeauthed/{{ token }}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/account/{{ token }}">Личный кабинет</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Смена данных профиля</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block header %}{{ header }}{% endblock %}
+
+{% block content %}
+{% if data_to_change != "avatar" %}
+<p>Текущее значение: {{ data_to_change_current_value }}</p>
+{% else %}
+<p>Текущее фото:</p>
+<img src="/{{ data_to_change_current_value }}">
+{% endif %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if data_to_change != "avatar" %}
+    {{ form.new_value.label }}
+    {{ form.new_value }}
+    {% else %}
+    <br>
+    {{ form.new_avatar.label }}
+    {{ form.new_avatar }}
+    {% endif %}
+    <br><br>
+    <button type="submit">Подтвердить</button>
+</form>
+<br><br><br>
+{% endblock %}
