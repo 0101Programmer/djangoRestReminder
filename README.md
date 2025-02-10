@@ -211,6 +211,17 @@
 
 ![Снимок экрана 2025-02-10 205910](https://github.com/user-attachments/assets/669f03bf-308a-437b-8a5d-0f799e3ce956)
 
+<hr>
 
+<p>Обновим эту же заметку, добавим фото — скриншот кнопки «PUT» (а потом нажмём на эту кнопку для подтверждения изменений).</p>
 
+![Снимок экрана 2025-02-10 210948](https://github.com/user-attachments/assets/0911db5c-303d-4c66-91ba-af0a8bc3867b)
+
+![Снимок экрана 2025-02-10 210956](https://github.com/user-attachments/assets/3cf4f978-e9fb-4e4b-b954-a340ccc7021b)
+
+![Снимок экрана 2025-02-10 211013](https://github.com/user-attachments/assets/43081706-7a6f-4e31-b314-af49b6589fe9)
+
+![Снимок экрана 2025-02-10 211039](https://github.com/user-attachments/assets/5fed2596-4e6f-46f7-ade8-5d9208e745b8)
+
+![Снимок экрана 2025-02-10 211050](https://github.com/user-attachments/assets/de09b89d-5372-4c7c-ab66-32886279565c)
 
