@@ -223,5 +223,7 @@
 
 ![Снимок экрана 2025-02-10 211039](https://github.com/user-attachments/assets/5fed2596-4e6f-46f7-ade8-5d9208e745b8)
 
+<p>Теперь она отобразилась во вкладке дашборд в обновлённом варианте</p>
+
 ![Снимок экрана 2025-02-10 211050](https://github.com/user-attachments/assets/de09b89d-5372-4c7c-ab66-32886279565c)
 
