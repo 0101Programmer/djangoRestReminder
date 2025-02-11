@@ -30,7 +30,7 @@ class RegistrationPage(View):
             password_confirmation = form.cleaned_data["password_confirmation"]
             birthdate = str(form.cleaned_data["birthdate"])
 
-            # валидация полей формы
+            # доп валидация полей формы
             if name.isdigit():
                 raise ValidationError("Имя не может состоять толчок из цифр")
             elif len(password) < 5 or not any(char.isdigit() for char in password) or not any(char.isalpha() for char in password):
@@ -49,6 +49,4 @@ class RegistrationPage(View):
             token = secrets.token_urlsafe(nbytes=32)
             cache.set(token, User.objects.get(email=email).id, timeout=300)
             return redirect(f'/homeauthed/{token}')
-        return render(request, 'guest/registration.html', {'title': 'Регистрация',
-                                                           'header': 'Пожалуйста, заполните все обязательные поля',
-                                                           "form": form})
+        raise ValidationError(form.errors)
